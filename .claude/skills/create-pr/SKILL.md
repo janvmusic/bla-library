@@ -1,5 +1,5 @@
 ---
-name: pull-request
+name: create-pr
 description: Create a GitHub Pull Request with a structured, informative description. Auto-loads when creating a PR, opening a pull request, creating a branch, or any GitHub PR operation. MUST use instead of default PR creation behavior.
 ---
 
