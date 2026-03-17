@@ -53,3 +53,18 @@ source ~/.zshrc
 psql --version
 psql postgres
 ```
+
+5. Set up your DB
+
+```bash
+bundle exec rails db:create
+bundle exec rails db:migrate
+bundle exec rails db:seed
+```
+
+### Demo Credentials
+
+| Role      | Email                 | Password    |
+| --------- | --------------------- | ----------- |
+| Librarian | librarian@example.com | password123 |
+| Member    | member@example.com    | password123 |
