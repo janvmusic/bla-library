@@ -14,15 +14,34 @@ This is a Ruby on Rails application that helps users to manage a library. The ap
 ## Authentication
 
 - Use Devise for authentication
-- JWT tokens via devise-jwt gem
 - Two roles: :librarian and :member (stored on User model)
 - Use Pundit for authorization policies
+- JWT tokens are handled entirely by devise-jwt, not a custom JsonWebToken class
+- Authorization header format: Bearer <token>
+- Devise controllers are under Api::V1::Auth namespace
 
 ## API Responses
 
 - Use jsonapi-serializer for all JSON responses
 - Never render ActiveRecord objects directly
 - Always return proper HTTP status codes
+- Serializer class naming: BookSerializer, UserSerializer, BorrowingSerializer
+- Never use ActiveModel::Serializers
+- Always serialize through a serializer class, never render model attributes directly
+
+## Error Handling
+
+- Use a shared ErrorHandler concern in ApplicationController
+- rescue_from ActiveRecord::RecordNotFound → 404
+- rescue_from Pundit::NotAuthorizedError → 403
+- rescue_from ActiveRecord::RecordInvalid → 422
+- Error response shape: { error: "message" } for single, { errors: [] } for multiple
+
+## CORS
+
+- Use rack-cors gem
+- Configured in config/initializers/cors.rb
+- Allow requests from the React frontend origin
 
 ## Frontend
 
@@ -45,6 +64,12 @@ WIP
 - A member cannot borrow the same book twice (while active)
 - available_copies = total_copies - active borrowings count
 - A borrowing is "active" when returned_at is NULL
+
+## API Conventions
+
+- All endpoints live under /api/v1
+- Namespace controllers under Api::V1
+- Exception: auth endpoints under Api::V1::Auth
 
 ## Development Workflow
 
@@ -77,11 +102,6 @@ WIP
 - NEVER modify the Gemfile, Rails configuration or initializers, nor RSpec configuration or test support files. All instructions are intended to be implemented within the existing application configuration and dependencies. If something appears to be missing or misconfigured, stop.
 - Use SOLID principles when building a class, method or function.
 
-### Common Patterns
-
-- If a form url or controller redirect is to an action in the same controller, use a hash with the action name as the key e.g. `{ action: :new }`
-- When making migrations, use `text` for all string fields; never use `string` or `varchar`
-
 ### Naming Conventions
 
 - Use snake_case for file names, method names, and variables
@@ -104,16 +124,8 @@ WIP
 ### Controllers
 
 - When adding new controllers or actions, don't forget to update the routes.rb
-- Use `expect` syntax instead of `require`/`allow` for strong parameters:
-
-  ```ruby
-  # Good
-  params.expect(user: [:name, :favorite_pie])
-
-  # Bad
-  params.require(:user).permit(:name, :favorite_pie)
-  ```
-
+- Use `params.expect` syntax for strong parameters, never `params.require.permit`
+- API mode has no CSRF protection — do not add it back
 - Unless parameters are reused more than once, assign strong parameters to a local variable rather than a method
 - When linking or redirecting to an action in the same controller, use `url_for(action: "the_action")` instead of path helpers
 
@@ -136,6 +148,6 @@ WIP
 ## Performance Optimization
 
 - Use database indexing effectively
-- Implement caching strategies (fragment caching, Russian Doll caching)
+- Implement caching strategies (HTTP caching, cache-control headers)
 - Use eager loading to avoid N+1 queries
 - Optimize database queries using includes, joins, or select
