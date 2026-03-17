@@ -1,2 +1,39 @@
 ### Summary
+
 BLA Ruby + React assessment
+
+### Setup
+
+1. [Install ruby and rails](https://guides.rubyonrails.org/v8.0/install_ruby_on_rails.html)
+
+```bash
+# Install Xcode Command Line Tools
+$ xcode-select --install
+
+# Install Homebrew and dependencies
+$ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+$ echo 'export PATH="/opt/homebrew/bin:$PATH"' >> ~/.zshrc
+$ source ~/.zshrc
+$ brew install openssl@3 libyaml gmp rust
+
+# Install Mise version manager
+$ curl https://mise.run | sh
+$ echo 'eval "$(~/.local/bin/mise activate)"' >> ~/.zshrc
+$ source ~/.zshrc
+
+# Install Ruby globally with Mise
+$ mise use -g ruby@3
+```
+
+2. To setup the BE use
+
+```bash
+cd backend && bundle install
+```
+
+3. Install Github CLI
+
+```bash
+brew install gh
+gh auth login
+```
