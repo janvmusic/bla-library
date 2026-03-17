@@ -37,3 +37,19 @@ cd backend && bundle install
 brew install gh
 gh auth login
 ```
+
+4. Install postgres
+
+```bash
+# Install
+brew install postgresql@16
+brew services start postgresql@16
+
+# Reload your zsh
+export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
+source ~/.zshrc
+
+# Verify
+psql --version
+psql postgres
+```
