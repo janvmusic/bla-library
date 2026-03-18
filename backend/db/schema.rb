@@ -10,9 +10,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_17_210753) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_18_024310) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "book_reservations", force: :cascade do |t|
+    t.bigint "book_id", null: false
+    t.datetime "borrowed_at"
+    t.datetime "created_at", null: false
+    t.datetime "due_date"
+    t.datetime "returned_at"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["book_id"], name: "index_book_reservations_on_book_id"
+    t.index ["user_id"], name: "index_book_reservations_on_user_id"
+  end
+
+  create_table "books", force: :cascade do |t|
+    t.text "author"
+    t.datetime "created_at", null: false
+    t.text "genre"
+    t.text "isbn"
+    t.text "title"
+    t.integer "total_copies"
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -28,4 +50,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_17_210753) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
+
+  add_foreign_key "book_reservations", "books"
+  add_foreign_key "book_reservations", "users"
 end
