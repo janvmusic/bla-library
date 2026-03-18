@@ -1,8 +1,15 @@
-### Summary
+# Summary
 
 BLA Ruby + React assessment
 
-### Setup
+## Demo Credentials
+
+| Role      | Email                 | Password    |
+| --------- | --------------------- | ----------- |
+| Librarian | librarian@example.com | password123 |
+| Member    | member@example.com    | password123 |
+
+## Backend Setup
 
 1. [Install ruby and rails](https://guides.rubyonrails.org/v8.0/install_ruby_on_rails.html)
 
@@ -62,9 +69,4 @@ bundle exec rails db:migrate
 bundle exec rails db:seed
 ```
 
-### Demo Credentials
-
-| Role      | Email                 | Password    |
-| --------- | --------------------- | ----------- |
-| Librarian | librarian@example.com | password123 |
-| Member    | member@example.com    | password123 |
+## Frontend Setup
