@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This is a Ruby on Rails application that helps users to manage a library. The application uses:
+This is a Ruby on Rails application that helps users to manage a library.
 
 ### Tech Stack
 
@@ -10,6 +10,52 @@ This is a Ruby on Rails application that helps users to manage a library. The ap
 - Ruby on Rails 8.x
 - Postgres database
 - RSpec for testing
+
+## Models Representation
+
+### User
+
+| Field      | Type                     |
+| ---------- | ------------------------ |
+| id         | integer (PK)             |
+| first_name | text                     |
+| last_name  | text                     |
+| email      | text                     |
+| password   | text                     |
+| role       | text (librarian, member) |
+
+### Book
+
+| Field        | Type         |
+| ------------ | ------------ |
+| id           | integer (PK) |
+| title        | text         |
+| author       | text         |
+| genre        | text         |
+| ISBN         | text         |
+| total_copies | integer      |
+
+### BookReservation
+
+| Field       | Type                |
+| ----------- | ------------------- |
+| id          | integer (PK)        |
+| user_id     | integer (FK → User) |
+| book_id     | integer (FK → Book) |
+| borrow_date | datetime            |
+| due_date    | datetime            |
+| returned_at | datetime            |
+
+## Associations
+
+- A **User** can have many **BookReservations**
+- A **Book** can have many **BookReservations**
+- A **BookReservation** belongs to one **User** and one **Book**
+
+## Roles
+
+- **Member** — can reserve and return books
+- **Librarian** — can add, edit, and delete books
 
 ## Authentication
 
@@ -53,10 +99,6 @@ This is a Ruby on Rails application that helps users to manage a library. The ap
 
 - Seed must include at least one librarian and one member with known credentials
 - Document demo credentials in README
-
-## Project structure
-
-WIP
 
 ## Domain Rules
 
