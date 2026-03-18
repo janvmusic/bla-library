@@ -28,6 +28,14 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe "associations" do
+    it "has many book_reservations" do
+      user = create(:user)
+      create_list(:book_reservation, 2, user: user)
+      expect(user.book_reservations.count).to eq(2)
+    end
+  end
+
   describe "roles" do
     it "defaults to member" do
       expect(User.new.role).to eq("member")
