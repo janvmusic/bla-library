@@ -1,7 +1,7 @@
 module Api
   module V1
     class BooksController < ApplicationController
-      before_action :authenticate_user, only: [:show, :update, :destroy]
+      before_action :set_book, only: [:show, :update, :destroy]
 
       def index
         authorize Book
@@ -12,27 +12,28 @@ module Api
       def show
         authorize @book
 
-        render json: BookSerializer.new(book).serializable_hash
+        render json: BookSerializer.new(@book).serializable_hash
       end
 
       def create
-        book = Book.create!(book_params)
+        book = Book.new(book_params)
         authorize book
+        book.save!
 
         render json: BookSerializer.new(book).serializable_hash, status: :created
       end
 
       def update
         authorize @book
-        book.update!(book_params)
+        @book.update!(book_params)
 
-        render json: BookSerializer.new(book).serializable_hash
+        render json: BookSerializer.new(@book).serializable_hash
       end
 
       def destroy
         authorize @book
-        book.destroy!
-        
+        @book.destroy!
+
         head :no_content
       end
 
