@@ -55,7 +55,10 @@ export const EditBook = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!book) return;
+    if (!book) {
+      return;
+    }
+
     setFields({
       title: book.title,
       author: book.author,

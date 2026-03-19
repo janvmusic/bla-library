@@ -98,6 +98,25 @@ export const DeleteIconButton = styled.button`
   }
 `;
 
+export const ReserveIconButton = styled.button`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: ${({ theme }) => `${theme.colors.dashboard.statGreen}1a`};
+  color: ${({ theme }) => theme.colors.dashboard.statGreen};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 0;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${({ theme }) => `${theme.colors.dashboard.statGreen}33`};
+    color: ${({ theme }) => theme.colors.dashboard.statGreen};
+  }
+`;
+
 export const EditIconButton = styled.button`
   width: 40px;
   height: 40px;

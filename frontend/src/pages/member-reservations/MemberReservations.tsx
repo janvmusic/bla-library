@@ -1,9 +1,6 @@
-import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { useReservations } from '../../hooks/useReservations';
-import { returnReservation } from '../../services/reservations-service';
-import type { Reservation } from '../../types/reservation';
 import {
   PageLayout,
   TopBar,
@@ -29,8 +26,8 @@ import {
   OverdueBadge,
   ActiveBadge,
   ReturnedBadge,
-  ReturnButton,
-} from './styles';
+} from '../reservations-dashboard/styles';
+import type { Reservation } from '../../types/reservation';
 
 type NavItem = {
   label: string;
@@ -39,9 +36,9 @@ type NavItem = {
 };
 
 const NAV_ITEMS: NavItem[] = [
-  { label: 'Dashboard', path: '/dashboard/librarian' },
-  { label: 'Books', path: '/dashboard/librarian/books' },
-  { label: 'Reservations', path: '/dashboard/librarian/reservations', active: true },
+  { label: 'Dashboard', path: '/dashboard/member' },
+  { label: 'Books', path: '/dashboard/member/books' },
+  { label: 'Reservations', path: '/dashboard/member/reservations', active: true },
 ];
 
 const formatDate = (iso: string): string =>
@@ -49,16 +46,22 @@ const formatDate = (iso: string): string =>
 
 const isOverdue = (dueDate: string): boolean => new Date(dueDate) < new Date();
 
-export const ReservationsDashboard = () => {
+const resolveStatus = (reservation: Reservation) => {
+  if (reservation.returnedAt) {
+    return <ReturnedBadge>Returned</ReturnedBadge>;
+  }
+
+  if (isOverdue(reservation.dueDate)) {
+    return <OverdueBadge>Overdue</OverdueBadge>;
+  }
+
+  return <ActiveBadge>Active</ActiveBadge>;
+};
+
+export const MemberReservations = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const fetched = useReservations();
-  const [reservations, setReservations] = useState<Reservation[]>([]);
-  const [returningId, setReturningId] = useState<number | null>(null);
-
-  useEffect(() => {
-    setReservations(fetched);
-  }, [fetched]);
+  const reservations = useReservations();
 
   const handleLogout = () => {
     logout();
@@ -67,30 +70,6 @@ export const ReservationsDashboard = () => {
 
   const handleNavClick = (path: string) => {
     navigate(path);
-  };
-
-  const handleReturn = async (id: number) => {
-    setReturningId(id);
-    try {
-      await returnReservation(id);
-      setReservations((prev) => prev.filter((r) => r.id !== id));
-    } catch {
-      // retain row on failure
-    } finally {
-      setReturningId(null);
-    }
-  };
-
-  const resolveStatus = (reservation: Reservation) => {
-    if (reservation.returnedAt) {
-      return <ReturnedBadge>Returned</ReturnedBadge>;
-    }
-
-    if (isOverdue(reservation.dueDate)) {
-      return <OverdueBadge>Overdue</OverdueBadge>;
-    }
-
-    return <ActiveBadge>Active</ActiveBadge>;
   };
 
   return (
@@ -126,17 +105,15 @@ export const ReservationsDashboard = () => {
           <ContentTopBar>Welcome, {user?.firstName ?? 'user'}</ContentTopBar>
 
           <MainContent>
-            <PageTitle>Reservations</PageTitle>
+            <PageTitle>My Reservations</PageTitle>
 
-            <Table aria-label="Reservations table">
+            <Table aria-label="My reservations table">
               <TableHead>
                 <TableHeadRow>
                   <TableHeadCell>Book</TableHeadCell>
-                  <TableHeadCell>Reserved By</TableHeadCell>
                   <TableHeadCell>Reservation Date</TableHeadCell>
                   <TableHeadCell>Due Date</TableHeadCell>
                   <TableHeadCell>Status</TableHeadCell>
-                  <TableHeadCell>Actions</TableHeadCell>
                 </TableHeadRow>
               </TableHead>
 
@@ -144,23 +121,9 @@ export const ReservationsDashboard = () => {
                 {reservations.map((reservation) => (
                   <TableRow key={reservation.id}>
                     <TableCell>{reservation.bookTitle}</TableCell>
-                    <TableCell>
-                      {reservation.userFirstName} {reservation.userLastName}
-                    </TableCell>
                     <TableCell>{formatDate(reservation.borrowDate)}</TableCell>
                     <TableCell>{formatDate(reservation.dueDate)}</TableCell>
                     <TableCell>{resolveStatus(reservation)}</TableCell>
-                    <TableCell>
-                      {!reservation.returnedAt && (
-                        <ReturnButton
-                          onClick={() => handleReturn(reservation.id)}
-                          disabled={returningId === reservation.id}
-                          aria-label={`Mark ${reservation.bookTitle} as returned`}
-                        >
-                          {returningId === reservation.id ? 'Returning...' : 'Mark Returned'}
-                        </ReturnButton>
-                      )}
-                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
