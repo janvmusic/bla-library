@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { useBooks } from '../../hooks/useBooks';
 import { createReservation } from '../../services/reservations-service';
+import { filterBooks } from '../../utils/book-search';
 import { Toast } from '../../components/toast/Toast';
 import type { AxiosError } from 'axios';
 import {
@@ -20,6 +21,8 @@ import {
   PageTitle,
 } from '../librarian-dashboard/styles';
 import {
+  SearchWrapper,
+  SearchInput,
   BooksGrid,
   BookCard,
   BookCardHeader,
@@ -62,10 +65,14 @@ export const BookList = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const books = useBooks();
+  const [searchQuery, setSearchQuery] = useState('');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
-  const availableBooks = books.filter((book) => book.totalCopies >= 1);
+  const availableBooks = filterBooks(
+    books.filter((book) => book.totalCopies >= 1),
+    searchQuery,
+  );
 
   const handleLogout = () => {
     logout();
@@ -128,6 +135,16 @@ export const BookList = () => {
 
             <MainContent>
               <PageTitle>Books</PageTitle>
+
+              <SearchWrapper>
+                <SearchInput
+                  type="search"
+                  placeholder="Search by title, author, genre or ISBN..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  aria-label="Search books"
+                />
+              </SearchWrapper>
 
               <BooksGrid>
                 {availableBooks.map((book) => (

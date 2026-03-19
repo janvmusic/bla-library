@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { useBooks } from '../../hooks/useBooks';
+import { filterBooks } from '../../utils/book-search';
 import type { NavItem } from './types';
 import {
   PageLayout,
@@ -17,6 +19,8 @@ import {
   PageTitle,
 } from '../librarian-dashboard/styles';
 import {
+  SearchWrapper,
+  SearchInput,
   BooksGrid,
   BookCard,
   BookCardHeader,
@@ -61,6 +65,9 @@ export const BooksDashboard = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const books = useBooks();
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const visibleBooks = filterBooks(books, searchQuery);
 
   const handleLogout = () => {
     logout();
@@ -114,8 +121,18 @@ export const BooksDashboard = () => {
           <MainContent>
             <PageTitle>Books</PageTitle>
 
+            <SearchWrapper>
+              <SearchInput
+                type="search"
+                placeholder="Search by title, author, genre or ISBN..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                aria-label="Search books"
+              />
+            </SearchWrapper>
+
             <BooksGrid>
-              {books.map((book) => (
+              {visibleBooks.map((book) => (
                 <BookCard key={book.id} aria-label={`Book: ${book.title}`}>
                   <BookCardHeader>
                     <BookTitle>{book.title}</BookTitle>
