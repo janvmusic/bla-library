@@ -85,6 +85,8 @@ As a **Librarian**, I want to manage the book catalogue and track
 reservations so that I can keep the library organised and follow
 up on overdue books.
 
+![Ticket Example](./resources/TicketExample.png)
+
 ## API Endpoints
 
 ### Auth
