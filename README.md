@@ -69,6 +69,13 @@ bundle exec rails db:migrate
 bundle exec rails db:seed
 ```
 
+6. Start the backend server
+
+```bash
+# in the backend folder run
+bundle exec rails s
+```
+
 ## Frontend Setup
 
 1. [Install Node.js](https://nodejs.org/en/download/)
@@ -93,5 +100,6 @@ npm -v # Should print "11.9.0".
 2. Run the project
 
 ```bash
+# In the frontend folder run the following
 npm run dev
 ```
