@@ -8,6 +8,13 @@ export interface StatCard {
   icon: React.ReactNode;
 }
 
+export interface LibrarianDashboardStats {
+  totalMembers: number;
+  totalBooks: number;
+  totalBooksBorrowed: number;
+  totalBooksOverdue: number;
+}
+
 export type NavItem = {
   label: string;
   path: string;

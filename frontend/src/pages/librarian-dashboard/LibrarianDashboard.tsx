@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from 'styled-components';
 import { useAuth } from '../../hooks/useAuth';
+import { useLibrarianStats } from '../../hooks/useLibrarianStats';
 import type { StatCard as StatCardType, NavItem } from './types';
 import {
   PageLayout,
@@ -51,41 +52,41 @@ const OverdueIcon = () => (
 const NAV_ITEMS: NavItem[] = [
   { label: 'Dashboard', path: '/dashboard/librarian', active: true },
   { label: 'Books', path: '/dashboard/librarian/books' },
-  { label: 'Activities', path: '/dashboard/librarian/activities' },
-  { label: 'My Profile', path: '/dashboard/librarian/profile' },
+  { label: 'Reservations', path: '/dashboard/librarian/reservations' },
 ];
 
 export const LibrarianDashboard = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const theme = useTheme();
+  const stats = useLibrarianStats();
 
   const STAT_CARDS: StatCardType[] = [
     {
       label: 'Total Members',
       description: 'registered members',
-      count: 0,
+      count: stats.totalMembers,
       color: theme.colors.dashboard.statPurple,
       icon: <MembersIcon />,
     },
     {
       label: 'Total Books',
       description: 'books in library',
-      count: 0,
+      count: stats.totalBooks,
       color: theme.colors.dashboard.statBlue,
       icon: <BooksIcon />,
     },
     {
       label: 'Books Borrowed',
       description: 'currently borrowed',
-      count: 0,
+      count: stats.totalBooksBorrowed,
       color: theme.colors.dashboard.statGreen,
       icon: <BorrowedIcon />,
     },
     {
       label: 'Books Overdue',
       description: 'past due date',
-      count: 0,
+      count: stats.totalBooksOverdue,
       color: theme.colors.dashboard.statRed,
       icon: <OverdueIcon />,
     },

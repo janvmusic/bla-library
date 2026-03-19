@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :books
       resources :book_reservations
+      get "dashboard/librarian/stats", to: "librarian_dashboard#stats"
     end
   end
 
