@@ -73,7 +73,7 @@ bundle exec rails db:seed
 
 1. [Install Node.js](https://nodejs.org/en/download/)
 
-```
+```bash
 # Download and install nvm:
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash
 
@@ -88,4 +88,10 @@ node -v # Should print "v24.14.0".
 
 # Verify npm version:
 npm -v # Should print "11.9.0".
+```
+
+2. Run the project
+
+```bash
+npm run dev
 ```
