@@ -7,6 +7,7 @@ import { ReservationsDashboard } from './pages/reservations-dashboard/Reservatio
 import { MemberDashboard } from './pages/member-dashboard/MemberDashboard';
 import { BookList } from './pages/book-list/BookList';
 import { MemberReservations } from './pages/member-reservations/MemberReservations';
+import { CreateBook } from './pages/create-book/CreateBook';
 import { EditBook } from './pages/edit-book/EditBook';
 import { DeleteBook } from './pages/delete-book/DeleteBook';
 import { ProtectedRoute } from './components/protected-route/ProtectedRoute';
@@ -28,6 +29,7 @@ function App() {
         <Route path="/dashboard/member/reservations" element={<MemberReservations />} />
 
         {/* Book */}
+        <Route path="/books/new" element={<CreateBook />} />
         <Route path="/books/:id/edit" element={<EditBook />} />
         <Route path="/books/:id/delete" element={<DeleteBook />} />
       </Route>
