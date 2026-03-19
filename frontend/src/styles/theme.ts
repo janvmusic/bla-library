@@ -15,6 +15,18 @@ export const theme = {
     buttonText: '#ffffff',
     muted: '#666666',
     error: '#c0392b',
+    dashboard: {
+      headerBg: '#5B35A0',
+      sidebarBg: '#5B35A0',
+      sidebarActiveItemBg: 'rgba(255, 255, 255, 0.18)',
+      sidebarActiveText: '#4ade80',
+      sidebarText: '#ffffff',
+      contentBg: '#f4f5f7',
+      statPurple: '#5B35A0',
+      statGreen: '#22c55e',
+      statBlue: '#3B82F6',
+      statRed: '#EF5350',
+    },
   },
   fontSizes: {
     sm: '0.85rem',

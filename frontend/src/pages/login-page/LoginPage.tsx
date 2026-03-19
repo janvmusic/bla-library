@@ -61,7 +61,7 @@ export const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const { login, user } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -70,9 +70,8 @@ export const LoginPage = () => {
     setError(null);
 
     try {
-      await login({ email, password });
-      const role = user?.role;
-      navigate(role === 'librarian' ? '/dashboard/librarian' : '/dashboard/member');
+      const authUser = await login({ email, password });
+      navigate(authUser.role === 'librarian' ? '/dashboard/librarian' : '/dashboard/member');
     } catch {
       setError('Invalid email or password');
     } finally {
