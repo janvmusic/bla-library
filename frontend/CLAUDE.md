@@ -50,7 +50,7 @@ This is a React + TypeScript + StyledComponents application that helps users to 
 - **Member** — can reserve and return books
 - **Librarian** — can add, edit, and delete books
 
-### Tech Stack
+## Tech Stack
 
 - React 18
 - TypeScript 5.x
@@ -76,11 +76,6 @@ This is a React + TypeScript + StyledComponents application that helps users to 
 - On 401 response, clear token and redirect to /login
 - Axios instance lives in src/services/api.ts with interceptors configured
 
-## API Responses
-
-- The backend is RESTful application which uses JSON as form of communication
-- The backend uses HTTP status codes to express what has happened
-
 ## Routing
 
 - Use React Router DOM v6
@@ -89,6 +84,12 @@ This is a React + TypeScript + StyledComponents application that helps users to 
 - Redirect to /login if unauthenticated
 - Librarian sees /dashboard/librarian
 - Member sees /dashboard/member
+
+## API Conventions
+
+- All endpoints live under /api/v1
+- Auth endpoints live under /api/v1/auth
+- Base URL: http://localhost:3000/api/v1
 
 ## Backend
 
@@ -114,16 +115,6 @@ This is a React + TypeScript + StyledComponents application that helps users to 
 - Use `npm run dev` to start the development server (port 5173)
 - Backend runs on port 3000
 - Axios base URL: http://localhost:3000
-
-### Running the application
-
-# Unit tests
-
-- For development purposes, there wont be specs or unit tests in this project.
-
-### Storybook
-
-- For development purposes, there wont be storybooks in this project
 
 ## Coding Guidelines
 
@@ -153,6 +144,12 @@ This is a React + TypeScript + StyledComponents application that helps users to 
 - Follow the StyledComponents Style Guide (https://styled-components.com/docs/basics#styling-any-component)
 - Prefer single quote for strings
 - Always strip whitespace at the end of lines and ensure a blank line exists at the end of the file
+- In Javascript code, add semi-colon at the end
+- When creating pages, use the following structure
+  - For the folder name use the component name in kebab-style
+  - Component name use CamelCase
+  - Create styles.ts, all styles go here
+  - Create types.ts, all typing goes here
 
 ### Styled Components Conventions
 
