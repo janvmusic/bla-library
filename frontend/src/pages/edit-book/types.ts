@@ -1,8 +1,7 @@
-export interface Book {
-  id: number;
+export type BookFormFields = {
   title: string;
   author: string;
   genre: string;
   isbn: string;
-  totalCopies: number;
-}
+  totalCopies: string;
+};
