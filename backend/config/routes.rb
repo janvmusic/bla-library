@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       resources :books
       resources :book_reservations
       get "dashboard/librarian/stats", to: "librarian_dashboard#stats"
+      get "dashboard/member/stats", to: "member_dashboard#stats"
     end
   end
 

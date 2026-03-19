@@ -38,3 +38,10 @@ export const getReservations = async (): Promise<Reservation[]> => {
 export const returnReservation = async (id: number): Promise<void> => {
   await api.delete(`/book_reservations/${id}`);
 };
+
+export const createReservation = async (bookId: number, userId: number): Promise<Reservation> => {
+  const response = await api.post<{ data: JsonApiReservationResource }>('/book_reservations', {
+    book_reservation: { book_id: bookId, user_id: userId },
+  });
+  return deserializeReservation(response.data.data);
+};

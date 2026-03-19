@@ -1,6 +1,6 @@
 class BookPolicy < ApplicationPolicy
-  def index? = user.librarian?
-  def show? = user.librarian?
+  def index? = true
+  def show? = true
   def create? = user.librarian?
   def update? = user.librarian?
   def destroy? = user.librarian?
