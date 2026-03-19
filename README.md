@@ -27,9 +27,19 @@ For this assessment, the following technologies were used:
 
 ![App Data Flow](resources/SimpleDataFlow.png)
 
+## Project Structure
+
+```
+bla-library/
+├── backend/ ← Rails API
+├── frontend/ ← React + Vite + StyledComponents
+├── resources/ ← diagrams and assets
+└── README.md
+```
+
 ## Demo Credentials
 
-**Important** These are por demo purposes
+**Important** These are for demo purposes
 
 | Role      | Email                 | Password    |
 | --------- | --------------------- | ----------- |
@@ -106,8 +116,8 @@ up on overdue books.
 
 - No pagination on book listing endpoint
 - Frontend has no unit tests (intentional for scope of assessment)
-- Password reset, remeber user login, signup flows were not implemented
-- The search mechanism lives currently in the frontend
+- Password reset, remember user login, signup flows were not implemented
+- Book search is currently filtered client-side; no server-side search endpoint implemented
 
 ## Backend Setup
 
