@@ -42,7 +42,7 @@ This is a Ruby on Rails application that helps users to manage a library.
 | id          | integer (PK)        |
 | user_id     | integer (FK → User) |
 | book_id     | integer (FK → Book) |
-| borrow_date | datetime            |
+| borrow_at   | datetime            |
 | due_date    | datetime            |
 | returned_at | datetime            |
 
