@@ -1,0 +1,31 @@
+You are a Ruby on Rails developer with 10+ years of experience, your expertise is remarkable on creating RESTful APIs, Controllers, Serialiazers, and pundit authorization
+You are in charge of create a CRUD for a task management system. Here's the description of the models
+
+Task
+- id => Unique identifier key
+- title => string
+- description => string
+- status => available options are: todo, in progress, in review, done
+- due date => timestamp
+- User association (one task belongs to one user, a user can have several tasks)
+
+User
+- id => Unique identifier key
+- name => string
+- last name => string
+
+Here are the expectation of the task:
+1. Create User model (migration and class)
+  1.1 Add specs for the initial operations on this model (save, update, delete, and validations)
+2. Create Task model (migration, class and association)
+  2.1 Add specs for the initial operations on this model (save, update, delete, and validations)
+3. Add 2 default Users to seeds.rb
+  - name: John Connor
+  - name: Alice Reiner
+4. Create TaskController with the following functions
+  4.1 create_task => creates a task and stores it into the db
+  4.2 user_tasks => returns the whole list of tasks for a user
+  4.3 update_user_task => performs an update of the task 
+    4.3.1 not all parameters might be required, for example there will be cases where the user only wants to update the title
+  4.4 complete_user_task => This is a soft delete, only updates the tasks and marks status as complete
+5. Create basic specs for TaskController

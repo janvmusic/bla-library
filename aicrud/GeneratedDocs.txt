@@ -1,0 +1,48 @@
+  What was generated
+
+  Migrations
+
+  ┌────────────────────────────────┬──────────────────────────────────────────────────────────────────────┐
+  │              File              │                               Purpose                                │
+  ├────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+  │ 20260101000001_create_users.rb │ first_name, last_name — both null: false                             │
+  ├────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+  │ 20260101000002_create_tasks.rb │ title (limit 255), status (integer, default 0), due_date, user_id FK │
+  └────────────────────────────────┴──────────────────────────────────────────────────────────────────────┘
+
+  Models
+
+  - User — has_many :tasks, dependent: :destroy, validates presence of both name fields.
+  - Task — belongs_to :user, enum :status, validates title presence + 255 char limit, custom due_date_not_in_past
+  validator (skips when nil).
+
+  Controller (Api::V1::TasksController)
+
+  - set_user before-action looks up @user via params[:user_id]; 404 from rescue_from RecordNotFound if missing.
+  - set_task before-action (update/destroy only) scopes the find to @user.tasks and calls authorize @task
+  immediately — one place for both lookup and auth.
+  - destroy uses @task.done! (enum bang method) — no destroy, record stays.
+
+  Pundit
+
+  - TaskPolicy — all four predicates check user.id == record.user_id. Works for both new (unsaved, user_id pre-set
+   by .build) and persisted records.
+  - Scope#resolve returns scope.where(user: user) — policy_scope(Task) in index is automatically filtered to
+  current user, then chained with .where(user: @user).
+
+  current_user
+
+  Reads from X-User-Id request header as a lightweight stub — easy to swap for JWT/Devise. In specs it's stubbed
+  via allow_any_instance_of.
+
+  Specs
+
+  - Model specs — shoulda-matchers for all validations/associations + explicit due_date cases.
+  - Request specs — stubs current_user, exercises all 4 actions, covers 201/422/403/404/200 status codes and the
+  soft-delete invariant.
+
+  To run
+
+  bundle install
+  rails db:create db:migrate db:seed
+  bundle exec rspec

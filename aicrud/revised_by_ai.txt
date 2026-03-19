@@ -1,0 +1,83 @@
+# Context
+You are a Rails 7.1 API-only developer (Ruby 3.2, PostgreSQL).
+Your expertise covers RESTful API design, ActiveRecord, Pundit
+authorization, Blueprinter serialization, and RSpec testing.
+
+# Task
+Generate a task management API. Follow Rails conventions strictly.
+Do not scaffold a full MVC app — API-only mode only.
+
+# Models
+User
+  - id (primary key)
+  - first_name: string, presence required
+  - last_name:  string, presence required
+
+Task
+  - id (primary key)
+  - title:       string,    presence required, max 255 chars
+  - description: text,      optional
+  - status:      integer,   enum { todo: 0, in_progress: 1,
+                             in_review: 2, done: 3 }, default: :todo
+  - due_date:    datetime,  optional, must not be in the past
+  - user_id:     foreign key, belongs_to :user
+  Association: User has_many :tasks; Task belongs_to :user
+
+# Seeds
+Add to seeds.rb:
+  User.create!(first_name: "John",  last_name: "Connor")
+  User.create!(first_name: "Alice", last_name: "Reiner")
+
+# Routes (nested)
+resources :users, only: [] do
+  resources :tasks, only: [:index, :create, :update, :destroy]
+end
+
+# Controller: Api::V1::TasksController
+Implement 4 actions following REST conventions:
+
+  index   GET /users/:user_id/tasks
+    - Return all tasks for the given user
+    - Authorize with policy_scope(Task)
+    - Respond 200 with serialized task array
+
+  create  POST /users/:user_id/tasks
+    - Permitted params: title, description, status, due_date
+    - Authorize with authorize(@task)
+    - Respond 201 on success, 422 with error details on failure
+
+  update  PATCH /users/:user_id/tasks/:id
+    - All params optional (partial update supported)
+    - Authorize with authorize(@task)
+    - Respond 200 on success, 422 on failure, 404 if not found
+
+  destroy DELETE /users/:user_id/tasks/:id
+    - Soft delete only: set status to :done, do not destroy record
+    - Authorize with authorize(@task)
+    - Respond 200 with updated task, 404 if not found
+
+Error format for all failures:
+  { "errors": ["message 1", "message 2"] }
+
+# Serializer
+Use Blueprinter. TaskBlueprint should expose:
+  id, title, description, status, due_date, user_id
+
+# Pundit
+Create TaskPolicy:
+  - index?,  create?  => user owns the parent user record
+  - update?, destroy? => user owns the task
+  - Scope: filter to current_user's tasks only
+(Assume current_user is available via ApplicationController)
+
+# Specs (RSpec + FactoryBot + Shoulda Matchers)
+  model specs:
+    - User: validations for first_name, last_name presence
+    - Task: validations (title presence, status enum,
+            due_date not in past), association to user
+
+  request specs for TasksController:
+    - index: returns only current user's tasks
+    - create: success (201), missing title (422), wrong user (403)
+    - update: partial update success, 404 on not found
+    - destroy: status becomes :done, record not deleted
