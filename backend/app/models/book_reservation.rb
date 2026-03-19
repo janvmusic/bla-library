@@ -9,7 +9,7 @@ class BookReservation < ApplicationRecord
   }
 
   before_create do
-    self.borrowed_at = Time.current
-    self.due_date = 2.weeks.from_now
+    self.borrowed_at ||= Time.current
+    self.due_date ||= borrowed_at + 2.weeks
   end
 end

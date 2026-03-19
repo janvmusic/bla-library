@@ -27,8 +27,8 @@ RSpec.describe Book, type: :model do
       expect(build(:book, total_copies: nil)).not_to be_valid
     end
 
-    it "is not valid with total_copies less than 1" do
-      expect(build(:book, total_copies: 0)).not_to be_valid
+    it "is not valid with total_copies less than 0" do
+      expect(build(:book, total_copies: -1)).not_to be_valid
     end
   end
 

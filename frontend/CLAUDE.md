@@ -35,7 +35,7 @@ This is a React + TypeScript + StyledComponents application that helps users to 
 | id          | integer (PK)        |
 | user_id     | integer (FK → User) |
 | book_id     | integer (FK → Book) |
-| borrow_date | datetime            |
+| borrow_at   | datetime            |
 | due_date    | datetime            |
 | returned_at | datetime            |
 

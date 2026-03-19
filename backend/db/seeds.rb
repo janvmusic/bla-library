@@ -69,3 +69,10 @@ BookReservation.find_or_create_by!(user: another_member, book: books[2]) do |res
   reservation.due_date = 1.week.ago
   reservation.returned_at = nil
 end
+
+# Past due reservation for Emily Dickinson (borrowed 5 weeks ago, due 3 weeks ago)
+BookReservation.find_or_create_by!(user: another_member, book: books[3]) do |reservation|
+  reservation.borrowed_at = 5.weeks.ago
+  reservation.due_date = 3.weeks.ago
+  reservation.returned_at = nil
+end
