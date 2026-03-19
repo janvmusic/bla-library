@@ -1,3 +1,7 @@
+# Demo
+
+![Demo](./resources/demo.mov)
+
 # Summary
 
 This is a basic Library Management tool, there are two main roles
