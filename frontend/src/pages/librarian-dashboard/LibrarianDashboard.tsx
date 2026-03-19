@@ -49,6 +49,7 @@ const OverdueIcon = () => (
   </svg>
 );
 
+// TODO improve navigation
 const NAV_ITEMS: NavItem[] = [
   { label: 'Dashboard', path: '/dashboard/librarian', active: true },
   { label: 'Books', path: '/dashboard/librarian/books' },
