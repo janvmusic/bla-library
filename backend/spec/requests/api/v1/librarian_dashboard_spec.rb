@@ -6,7 +6,7 @@ RSpec.describe "Api::V1::LibrarianDashboard", type: :request do
   let(:librarian) { create(:user, :librarian) }
   let(:member) { create(:user) }
 
-  describe "GET /api/v1/librarian_dashboard/stats" do
+  describe "GET /api/v1/dashboard/librarian/stats" do
     context "as a librarian" do
       before { sign_in librarian }
 
@@ -18,7 +18,7 @@ RSpec.describe "Api::V1::LibrarianDashboard", type: :request do
           create(:book_reservation, user: create(:user), book: create(:book))
         end
 
-        get "/api/v1/librarian_dashboard/stats"
+        get "/api/v1/dashboard/librarian/stats"
 
         expect(response).to have_http_status(:ok)
         body = JSON.parse(response.body)
@@ -33,7 +33,7 @@ RSpec.describe "Api::V1::LibrarianDashboard", type: :request do
       before { sign_in member }
 
       it "returns 403" do
-        get "/api/v1/librarian_dashboard/stats"
+        get "/api/v1/dashboard/librarian/stats"
         expect(response).to have_http_status(:forbidden)
       end
     end
