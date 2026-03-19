@@ -25,6 +25,7 @@ export const FieldLabel = styled.label`
   font-size: ${({ theme }) => theme.fontSizes.sm};
   font-weight: 600;
   color: ${({ theme }) => theme.colors.inputText};
+  text-align: left;
 `;
 
 export const FieldInput = styled.input`

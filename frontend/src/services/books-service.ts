@@ -46,6 +46,19 @@ export const deleteBook = async (id: number): Promise<void> => {
   await api.delete(`/books/${id}`);
 };
 
+export const createBook = async (fields: Omit<Book, 'id'>): Promise<Book> => {
+  const response = await api.post<JsonApiBookResponse>('/books', {
+    book: {
+      title: fields.title,
+      author: fields.author,
+      genre: fields.genre,
+      isbn: fields.isbn,
+      total_copies: fields.totalCopies,
+    },
+  });
+  return deserializeBook(response.data.data);
+};
+
 export const updateBook = async (id: number, fields: Partial<Omit<Book, 'id'>>): Promise<Book> => {
   const response = await api.patch<JsonApiBookResponse>(`/books/${id}`, {
     book: {

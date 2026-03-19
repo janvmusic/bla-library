@@ -19,6 +19,8 @@ import {
   PageTitle,
 } from '../librarian-dashboard/styles';
 import {
+  PageTitleRow,
+  CreateButton,
   SearchWrapper,
   SearchInput,
   BooksGrid,
@@ -119,7 +121,9 @@ export const BooksDashboard = () => {
           <ContentTopBar>Welcome, {user?.firstName ?? 'user'}</ContentTopBar>
 
           <MainContent>
-            <PageTitle>Books</PageTitle>
+            <PageTitleRow>
+              <PageTitle>Books</PageTitle>
+            </PageTitleRow>
 
             <SearchWrapper>
               <SearchInput
@@ -129,6 +133,10 @@ export const BooksDashboard = () => {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 aria-label="Search books"
               />
+
+              <CreateButton onClick={() => navigate('/books/new')} aria-label="Create new book">
+                + New Book
+              </CreateButton>
             </SearchWrapper>
 
             <BooksGrid>

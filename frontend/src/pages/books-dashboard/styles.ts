@@ -1,7 +1,32 @@
 import styled from 'styled-components';
 
+export const PageTitleRow = styled.div`
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: ${({ theme }) => theme.spacing.md};
+`;
+
+export const CreateButton = styled.button`
+  background: ${({ theme }) => theme.colors.buttonBg};
+  color: ${({ theme }) => theme.colors.buttonText};
+  border: none;
+  border-radius: ${({ theme }) => theme.borderRadius.button};
+  padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.lg}`};
+  font-size: ${({ theme }) => theme.fontSizes.sm};
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    background: #2d0070;
+  }
+`;
+
 export const SearchWrapper = styled.div`
   margin-bottom: ${({ theme }) => theme.spacing.md};
+  gap: 1rem;
+  display: flex;
+  align-content: center;
+  justify-content: center;
 `;
 
 export const SearchInput = styled.input`
