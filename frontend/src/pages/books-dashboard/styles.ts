@@ -1,5 +1,30 @@
 import styled from 'styled-components';
 
+export const SearchWrapper = styled.div`
+  margin-bottom: ${({ theme }) => theme.spacing.md};
+`;
+
+export const SearchInput = styled.input`
+  width: 100%;
+  max-width: 360px;
+  padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.md}`};
+  border: 1px solid ${({ theme }) => theme.colors.inputBorder};
+  border-radius: ${({ theme }) => theme.borderRadius.button};
+  font-size: ${({ theme }) => theme.fontSizes.sm};
+  color: ${({ theme }) => theme.colors.inputText};
+  background-color: ${({ theme }) => theme.colors.cardBg};
+  outline: none;
+  box-sizing: border-box;
+
+  &::placeholder {
+    color: ${({ theme }) => theme.colors.inputPlaceholder};
+  }
+
+  &:focus {
+    border-color: ${({ theme }) => theme.colors.primaryLight};
+  }
+`;
+
 export const BooksGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
