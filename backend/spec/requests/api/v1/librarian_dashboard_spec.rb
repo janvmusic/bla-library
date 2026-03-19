@@ -21,11 +21,11 @@ RSpec.describe "Api::V1::LibrarianDashboard", type: :request do
         get "/api/v1/dashboard/librarian/stats"
 
         expect(response).to have_http_status(:ok)
-        body = JSON.parse(response.body)
-        expect(body["total_members"]).to eq(4)
-        expect(body["total_books"]).to eq(5)
-        expect(body["total_books_borrowed"]).to eq(2)
-        expect(body["total_books_overdue"]).to eq(1)
+        attributes = JSON.parse(response.body).dig("data", "attributes")
+        expect(attributes["total_members"]).to eq(4)
+        expect(attributes["total_books"]).to eq(5)
+        expect(attributes["total_books_borrowed"]).to eq(2)
+        expect(attributes["total_books_overdue"]).to eq(1)
       end
     end
 
